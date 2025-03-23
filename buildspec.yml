@@ -1,0 +1,15 @@
+# buildspec.yml
+version: 0.2
+
+phases:
+# install terraform binary where codebuild is executing
+  install:
+    commands:
+      - curl -s https://releases.hashicorp.com/terraform/1.11.2/terraform_1.11.2_linux_386.zip -o terraform.zip
+      - unzip terraform.zip -d /usr/local/bin
+      - chmod 755 /usr/local/bin/terraform
+# apply TF resources
+  build:
+    commands:
+      - terraform init
+      - terraform apply -auto-approve
